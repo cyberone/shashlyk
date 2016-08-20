@@ -31,6 +31,9 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
   compile group: 'org.webjars', name: 'bootstrap', version: '3.3.6'
+	compile group: 'com.jcabi', name: 'jcabi-log', version: '0.17.1'
+	compile('org.jsoup:jsoup:1.9.1')
+	сompile('ch.qos.logback:logback-classic:1.1.7')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
