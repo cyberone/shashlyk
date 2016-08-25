@@ -46,7 +46,7 @@ public class Combos implements Iterable<Combo> {
 
         @Override
         public Combo next() {
-            // todo implement
+            // todo вытащить элементы до следующего
             throw new UnsupportedOperationException("next");
         }
     }

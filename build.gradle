@@ -11,8 +11,9 @@ buildscript {
 }
 
 apply plugin: 'java'
-apply plugin: 'eclipse'
 apply plugin: 'spring-boot'
+apply plugin: 'idea'
+apply plugin: 'maven'
 
 jar {
 	baseName = 'shashlyk'
@@ -27,20 +28,12 @@ repositories {
 
 
 dependencies {
-	// compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
   compile group: 'org.webjars', name: 'bootstrap', version: '3.3.6'
 	compile group: 'com.jcabi', name: 'jcabi-log', version: '0.17.1'
 	compile('org.jsoup:jsoup:1.9.1')
-	сompile('ch.qos.logback:logback-classic:1.1.7')
+	testCompile ('com.google.guava:guava:19.0')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
-
-eclipse {
-	classpath {
-		 containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
-		 containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
-	}
-}

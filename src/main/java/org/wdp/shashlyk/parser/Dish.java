@@ -1,9 +1,8 @@
 package org.wdp.shashlyk.parser;
 
 /**
- * Combo business-lunch item set.
+ * Lunch dish.
  * @author Aleksey Popov (alopen@yandex.ru)
  */
-public interface Combo {
-    Iterable<Dish> dishes();
+public interface Dish {
 }

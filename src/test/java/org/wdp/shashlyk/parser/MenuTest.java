@@ -1,6 +1,7 @@
 package org.wdp.shashlyk.parser;
 
-import com.jcabi.log.Logger;
+import com.google.common.collect.Iterables;
+import java.io.IOException;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -15,7 +16,6 @@ import org.wdp.shashlyk.parser.jsoup.JsoupBasedMenu;
 public class MenuTest {
     @Test
     public void canFetchCombos() throws Exception {
-        Logger.debug(this, "canFetchCombos");
         final Menu menu = new JsoupBasedMenu(
             Jsoup.parse(
                 this.getClass().getClassLoader().getResourceAsStream(
@@ -27,6 +27,25 @@ public class MenuTest {
         );
         MatcherAssert.assertThat(
             menu.combos(),
+            CoreMatchers.not(
+                Matchers.emptyIterable()
+            )
+        );
+    }
+
+    @Test
+    public void canFetchDishes() throws IOException {
+        final Menu menu = new JsoupBasedMenu(
+            Jsoup.parse(
+                this.getClass().getClassLoader().getResourceAsStream(
+                    "menu_sample.html"
+                ),
+                "UTF-8",
+                "http://shashlikoff.ru"
+            )
+        );
+        MatcherAssert.assertThat(
+            Iterables.getFirst(menu.combos(), null).dishes(),
             CoreMatchers.not(
                 Matchers.emptyIterable()
             )
