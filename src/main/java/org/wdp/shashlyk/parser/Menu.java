@@ -6,9 +6,4 @@ package org.wdp.shashlyk.parser;
  */
 public interface Menu {
 
-    /**
-     *
-     * @return
-     */
-    Iterable<Combo> combos();
 }
