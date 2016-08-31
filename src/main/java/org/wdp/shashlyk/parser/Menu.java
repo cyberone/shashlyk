@@ -6,4 +6,9 @@ package org.wdp.shashlyk.parser;
  */
 public interface Menu {
 
+    /**
+     * Returns dishes.
+     * @return dishes
+     */
+    Dishes dishes();
 }

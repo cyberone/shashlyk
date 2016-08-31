@@ -1,8 +1,10 @@
 package org.wdp.shashlyk.parser;
 
 import java.io.IOException;
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.jsoup.Jsoup;
-import org.junit.Assert;
 import org.junit.Test;
 import org.wdp.shashlyk.parser.jsoup.JsoupBasedMenu;
 
@@ -22,7 +24,11 @@ public class MenuTest {
                 "http://shashlikoff.ru"
             )
         );
-        // todo implement
-        Assert.fail("Not implemented");
+        MatcherAssert.assertThat(
+            menu.dishes(),
+            CoreMatchers.not(
+                Matchers.emptyIterable()
+            )
+        );
     }
 }
