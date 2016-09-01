@@ -29,4 +29,9 @@ class JsoupDish implements Dish {
         }
         return elements.get(0).text();
     }
+
+    @Override
+    public String toString() {
+        return String.format("Dish(%s)", this.getName());
+    }
 }
