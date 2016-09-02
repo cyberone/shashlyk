@@ -19,6 +19,12 @@ class Drinks implements DishCategory {
     }
 
     private enum DrinkNames {
+        BLACK_CURRANT("Чёрная смородина"),
+        ROWAN("Рябина"),
+        TEA("Чай пакетированный"),
+        CHERRY("Морс \"Дикая ишня\""),
+        CRANBERRIES("Морс клюквенный"),
+        SEA_BUCKTHORN("Облепиха"),
         ;
 
         private final String name;
