@@ -8,4 +8,8 @@ import org.wdp.shashlyk.parser.Dish;
  */
 interface DishCategory {
     boolean contains(Dish dish);
+
+    default boolean needsGarnish(Dish dish) {
+        return false;
+    }
 }
