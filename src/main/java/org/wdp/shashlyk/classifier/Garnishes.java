@@ -29,7 +29,7 @@ public class Garnishes implements DishCategory {
     }
 
     private enum GarnishNames {
-        PUREE("Поре"),
+        PUREE("Пюре"),
         FRIED("Жареная картоха"),
         RICE("Рис")
         ;
