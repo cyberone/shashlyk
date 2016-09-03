@@ -1,7 +1,9 @@
 package org.wdp.shashlyk.classifier;
 
 import com.jcabi.log.Logger;
+import java.util.Random;
 import org.wdp.shashlyk.parser.Dish;
+import org.wdp.shashlyk.parser.simple.SimpleDish;
 
 /**
  * @author Aleksey Popov (alopen@yandex.ru)
@@ -16,6 +18,15 @@ class Sweets implements DishCategory {
             }
         }
         return false;
+    }
+
+    @Override
+    public Dish random() {
+        return new SimpleDish(
+            Sweets.SweetNames.values()[
+                new Random().nextInt(Sweets.SweetNames.values().length)]
+                .getName()
+        );
     }
 
     private enum SweetNames {

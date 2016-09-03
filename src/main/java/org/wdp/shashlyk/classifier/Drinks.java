@@ -1,7 +1,9 @@
 package org.wdp.shashlyk.classifier;
 
 import com.jcabi.log.Logger;
+import java.util.Random;
 import org.wdp.shashlyk.parser.Dish;
+import org.wdp.shashlyk.parser.simple.SimpleDish;
 
 /**
  * @author Aleksey Popov (alopen@yandex.ru)
@@ -18,11 +20,20 @@ class Drinks implements DishCategory {
         return false;
     }
 
+    @Override
+    public Dish random() {
+        Logger.debug(this, "random()");
+        return new SimpleDish(
+            Drinks.DrinkNames.values()[
+                new Random().nextInt(Drinks.DrinkNames.values().length)].getName()
+        );
+    }
+
     private enum DrinkNames {
         BLACK_CURRANT("Чёрная смородина"),
         ROWAN("Рябина"),
         TEA("Чай пакетированный"),
-        CHERRY("Морс \"Дикая ишня\""),
+        CHERRY("Морс \"Дикая вишня\""),
         CRANBERRIES("Морс клюквенный"),
         SEA_BUCKTHORN("Облепиха"),
         ;

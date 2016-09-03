@@ -1,7 +1,9 @@
 package org.wdp.shashlyk.classifier;
 
 import com.jcabi.log.Logger;
+import java.util.Random;
 import org.wdp.shashlyk.parser.Dish;
+import org.wdp.shashlyk.parser.simple.SimpleDish;
 
 /**
  * @author Aleksey Popov (alopen@yandex.ru)
@@ -16,6 +18,19 @@ class HotDishes implements DishCategory {
             }
         }
         return false;
+    }
+
+    @Override
+    public Dish random() {
+        Logger.debug(this, "random()");
+        final HotDishes.DishNames name = HotDishes.DishNames.values()[
+            new Random().nextInt(HotDishes.DishNames.values().length)];
+        if (name.needsGarnish()) {
+            return new SimpleDish(
+                name.getName(), new Garnishes().random()
+            );
+        }
+        return new SimpleDish(name.getName());
     }
 
     private enum DishNames {
@@ -44,13 +59,19 @@ class HotDishes implements DishCategory {
         ;
 
         private final String name;
+        private final boolean garnish;
 
-        DishNames(final String dish, final boolean garnish) {
+        DishNames(final String dish, final boolean needsGarnish) {
             this.name = dish;
+            this.garnish = needsGarnish;
         }
 
         public String getName() {
             return this.name;
+        }
+
+        public boolean needsGarnish() {
+            return this.garnish;
         }
     }
 }

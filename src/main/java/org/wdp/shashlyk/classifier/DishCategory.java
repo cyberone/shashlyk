@@ -12,4 +12,6 @@ interface DishCategory {
     default boolean needsGarnish(Dish dish) {
         return false;
     }
+
+    Dish random();
 }

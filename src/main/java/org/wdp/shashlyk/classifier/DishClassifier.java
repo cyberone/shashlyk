@@ -34,4 +34,8 @@ public enum DishClassifier {
     private boolean contains(final Dish dish) {
         return this.category.contains(dish);
     }
+
+    public Dish random() {
+        return this.category.random();
+    }
 }
