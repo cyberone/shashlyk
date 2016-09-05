@@ -1,11 +1,15 @@
 package org.wdp.shashlyk.parser.simple;
 
+import com.jcabi.log.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.wdp.shashlyk.parser.Dish;
 
 /**
  * @author Aleksey Popov (alopen@yandex.ru)
  */
 public class SimpleDish implements Dish {
+    private static final Pattern PATTERN = Pattern.compile("_БЛ", Pattern.LITERAL);
     private final String name;
     private Dish garnish = null;
 
@@ -24,5 +28,11 @@ public class SimpleDish implements Dish {
             return String.format("%s и %s", this.name, this.garnish.getName());
         }
         return this.name;
+    }
+
+    @Override
+    public String getPrettyName() {
+        Logger.debug(this, "getPrettyName()");
+        return PATTERN.matcher(this.getName()).replaceAll(Matcher.quoteReplacement(""));
     }
 }

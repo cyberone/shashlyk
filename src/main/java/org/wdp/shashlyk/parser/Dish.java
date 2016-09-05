@@ -11,6 +11,8 @@ import java.util.function.Predicate;
 public interface Dish {
     String getName();
 
+    String getPrettyName();
+
     class IsBusinessLunch implements Predicate<Dish> {
         @Override
         public boolean test(final Dish obj) {

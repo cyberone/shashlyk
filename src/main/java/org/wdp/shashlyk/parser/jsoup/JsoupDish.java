@@ -1,6 +1,8 @@
 package org.wdp.shashlyk.parser.jsoup;
 
 import com.jcabi.log.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.wdp.shashlyk.parser.Dish;
@@ -10,6 +12,7 @@ import org.wdp.shashlyk.parser.Dish;
  * @author Aleksey Popov (alopen@yandex.ru)
  */
 class JsoupDish implements Dish {
+    private static final Pattern PATTERN = Pattern.compile("_БЛ", Pattern.LITERAL);
     private final Element data;
 
     JsoupDish(final Element element) {
@@ -28,6 +31,12 @@ class JsoupDish implements Dish {
             );
         }
         return elements.get(0).text();
+    }
+
+    @Override
+    public String getPrettyName() {
+        Logger.debug(this, "getPrettyName()");
+        return PATTERN.matcher(this.getName()).replaceAll(Matcher.quoteReplacement(""));
     }
 
     @Override
