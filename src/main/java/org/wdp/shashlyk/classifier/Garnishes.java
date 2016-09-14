@@ -25,7 +25,13 @@ public class Garnishes implements DishCategory {
         Logger.debug(this, "random()");
         final Garnishes.GarnishNames name = Garnishes.GarnishNames.values()[
             new Random().nextInt(Garnishes.GarnishNames.values().length)];
-        return new SimpleDish(name.getName());
+        return new SimpleDish(name.getName(), DishClass.PLEBS);
+    }
+
+    @Override
+    public Dish random(final DishClass clazz) {
+        Logger.debug(this, "random(%s)", clazz);
+        return this.random();
     }
 
     private enum GarnishNames {

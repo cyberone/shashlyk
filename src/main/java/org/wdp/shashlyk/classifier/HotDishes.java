@@ -12,7 +12,7 @@ class HotDishes implements DishCategory {
     @Override
     public boolean contains(final Dish dish) {
         Logger.debug(this, "contains(%s)", dish);
-        for (final HotDishes.DishNames name : HotDishes.DishNames.values()) {
+        for (final HotDishes.DishData name : HotDishes.DishData.values()) {
             if (name.getName().equals(dish.getName())) {
                 return true;
             }
@@ -23,47 +23,64 @@ class HotDishes implements DishCategory {
     @Override
     public Dish random() {
         Logger.debug(this, "random()");
-        final HotDishes.DishNames name = HotDishes.DishNames.values()[
-            new Random().nextInt(HotDishes.DishNames.values().length)];
+        final HotDishes.DishData name = HotDishes.DishData.values()[
+            new Random().nextInt(HotDishes.DishData.values().length)];
         if (name.needsGarnish()) {
             return new SimpleDish(
-                name.getName(), new Garnishes().random()
-            );
+                name.getName(), new Garnishes().random(),
+                name.getCls());
         }
-        return new SimpleDish(name.getName());
+        return new SimpleDish(name.getName(), name.getCls());
     }
 
-    private enum DishNames {
-        BURRITOS("Бурритос с курицей_БЛ", false),
-        UDON("Удон Микс_БЛ", false),
-        DRANNIKI("Драники_БЛ", false),
-        CHICKEN_SHITSEL("Шницель куриный_БЛ", true),
-        MEAT_SHNITSEL("Шницель мясной_БЛ", true),
-        STEAK_AND_EGGS("Бифштекс с глазуньей_БЛ", true),
-        TURK_STEAKS("Турецкие котлетки_БЛ", true),
-        CHICKEN_KEBAB("Кебаб Куриный_БЛ", true),
-        PORIDGE_MUSH_EGGS("Гречка с грибами и глазуньей (Новинка)_БЛ", false),
-        KESADIA("Кесадия с курицей_БЛ", false),
-        CHICKEN_GRILL("Цыпленок - гриль_БЛ", true),
-        CHICKEN_SHASHLYK("Шашлык куриный_БЛ", true),
-        CHUCKCHA("Чукча (Новинка)_БЛ", true),
-        MACKEREL_GRILL("Скумбрия на гриле филе (Новинка)_БЛ", true),
-        LIVER_BURGERS("Котлеты печеночные_БЛ", false),
-        MINI_BURGER("Мини Бургер_БЛ", false),
-        ASSORTED_GRILL_SMALL("Ассорти гриль \"Small\"_БЛ", true),
-        CHICKEN_SHASHLYK_LAVASH("Шашлык куриный в лаваше_БЛ", false),
-        TURKEY_SHASHLYK("Шашлык из индейки_БЛ", true),
-        TURKEY_SHASHLYK_LAVASH("Шашлык из индейки в лаваше_БЛ", false),
-        PORK_SHASHLYK("Шашлык из свинины_БЛ", true),
-        PORK_SHASHLYK_LAVASH("Шашлык из свинины в лаваше_БЛ", false)
+    @Override
+    public Dish random(final DishClass clazz) {
+        Logger.debug(this, "random(%s)", clazz);
+        HotDishes.DishData dish;
+        final Random random = new Random();
+        do {
+            final HotDishes.DishData[] values = HotDishes.DishData.values();
+            dish = values[random.nextInt(values.length)];
+        } while (dish.getCls().ordinal() > clazz.ordinal());
+        if (dish.needsGarnish()) {
+            return new SimpleDish(dish.getName(), new Garnishes().random(), clazz);
+        }
+        return new SimpleDish(dish.getName(), clazz);
+    }
+
+    private enum DishData {
+        BURRITOS("Бурритос с курицей_БЛ", false, DishClass.PLEBS),
+        UDON("Удон Микс_БЛ", false, DishClass.PLEBS),
+        DRANNIKI("Драники_БЛ", false, DishClass.PLEBS),
+        CHICKEN_SHITSEL("Шницель куриный_БЛ", true, DishClass.PLEBS),
+        MEAT_SHNITSEL("Шницель мясной_БЛ", true, DishClass.PLEBS),
+        STEAK_AND_EGGS("Бифштекс с глазуньей_БЛ", true, DishClass.PLEBS),
+        TURK_STEAKS("Турецкие котлетки_БЛ", true, DishClass.PLEBS),
+        CHICKEN_KEBAB("Кебаб Куриный_БЛ", true, DishClass.PLEBS),
+        PORIDGE_MUSH_EGGS("Гречка с грибами и глазуньей (Новинка)_БЛ", false, DishClass.PLEBS),
+        KESADIA("Кесадия с курицей_БЛ", false, DishClass.PROLETARIAT),
+        CHICKEN_GRILL("Цыпленок - гриль_БЛ", true, DishClass.PROLETARIAT),
+        CHICKEN_SHASHLYK("Шашлык куриный_БЛ", true, DishClass.PROLETARIAT),
+        CHUCKCHA("Чукча (Новинка)_БЛ", true, DishClass.PROLETARIAT),
+        MACKEREL_GRILL("Скумбрия на гриле филе (Новинка)_БЛ", true, DishClass.PROLETARIAT),
+        LIVER_BURGERS("Котлеты печеночные_БЛ", false, DishClass.BOYARS),
+        MINI_BURGER("Мини Бургер_БЛ", false, DishClass.BOYARS),
+        ASSORTED_GRILL_SMALL("Ассорти гриль \"Small\"_БЛ", true, DishClass.BOYARS),
+        CHICKEN_SHASHLYK_LAVASH("Шашлык куриный в лаваше_БЛ", false, DishClass.BOYARS),
+        TURKEY_SHASHLYK("Шашлык из индейки_БЛ", true, DishClass.BOYARS),
+        TURKEY_SHASHLYK_LAVASH("Шашлык из индейки в лаваше_БЛ", false, DishClass.BOYARS),
+        PORK_SHASHLYK("Шашлык из свинины_БЛ", true, DishClass.BOYARS),
+        PORK_SHASHLYK_LAVASH("Шашлык из свинины в лаваше_БЛ", false, DishClass.BOYARS)
         ;
 
         private final String name;
         private final boolean garnish;
+        private final DishClass clazz;
 
-        DishNames(final String dish, final boolean needsGarnish) {
+        DishData(final String dish, final boolean grnsh, final DishClass cls) {
             this.name = dish;
-            this.garnish = needsGarnish;
+            this.garnish = grnsh;
+            this.clazz = cls;
         }
 
         public String getName() {
@@ -72,6 +89,10 @@ class HotDishes implements DishCategory {
 
         public boolean needsGarnish() {
             return this.garnish;
+        }
+
+        public DishClass getCls() {
+            return this.clazz;
         }
     }
 }

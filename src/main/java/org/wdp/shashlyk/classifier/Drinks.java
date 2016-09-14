@@ -23,29 +23,46 @@ class Drinks implements DishCategory {
     @Override
     public Dish random() {
         Logger.debug(this, "random()");
-        return new SimpleDish(
-            Drinks.DrinkNames.values()[
-                new Random().nextInt(Drinks.DrinkNames.values().length)].getName()
-        );
+        final Drinks.DrinkNames data = Drinks.DrinkNames.values()[
+            new Random().nextInt(Drinks.DrinkNames.values().length)];
+        return new SimpleDish(data.getName(), data.getCls());
+    }
+
+    @Override
+    public Dish random(final DishClass clazz) {
+        Logger.debug(this, "random(%s)", clazz);
+        Drinks.DrinkNames dish;
+        final Random random = new Random();
+        do {
+            final Drinks.DrinkNames[] values = Drinks.DrinkNames.values();
+            dish = values[random.nextInt(values.length)];
+        } while (dish.getCls().ordinal() > clazz.ordinal());
+        return new SimpleDish(dish.getName(), clazz);
     }
 
     private enum DrinkNames {
-        BLACK_CURRANT("Чёрная смородина"),
-        ROWAN("Рябина"),
-        TEA("Чай пакетированный"),
-        CHERRY("Морс \"Дикая вишня\""),
-        CRANBERRIES("Морс клюквенный"),
-        SEA_BUCKTHORN("Облепиха"),
+        BLACK_CURRANT("Чёрная смородина", DishClass.PLEBS),
+        ROWAN("Рябина", DishClass.PLEBS),
+        TEA("Чай пакетированный", DishClass.PLEBS),
+        CHERRY("Морс \"Дикая вишня\"", DishClass.PROLETARIAT),
+        CRANBERRIES("Морс клюквенный", DishClass.PROLETARIAT),
+        SEA_BUCKTHORN("Облепиха", DishClass.PROLETARIAT),
         ;
 
         private final String name;
+        private final DishClass clazz;
 
-        DrinkNames(final String dish) {
+        DrinkNames(final String dish, final DishClass cls) {
             this.name = dish;
+            this.clazz = cls;
         }
 
         public String getName() {
             return this.name;
+        }
+
+        public DishClass getCls() {
+            return this.clazz;
         }
     }
 

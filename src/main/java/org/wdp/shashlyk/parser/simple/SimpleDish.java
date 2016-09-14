@@ -3,6 +3,7 @@ package org.wdp.shashlyk.parser.simple;
 import com.jcabi.log.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.wdp.shashlyk.classifier.DishClass;
 import org.wdp.shashlyk.parser.Dish;
 
 /**
@@ -11,14 +12,16 @@ import org.wdp.shashlyk.parser.Dish;
 public class SimpleDish implements Dish {
     private static final Pattern PATTERN = Pattern.compile("_БЛ", Pattern.LITERAL);
     private final String name;
-    private Dish garnish = null;
+    private Dish garnish;
+    private final DishClass clazz;
 
-    public SimpleDish(final String dish) {
+    public SimpleDish(final String dish, final DishClass cls) {
         this.name = dish;
+        this.clazz = cls;
     }
 
-    public SimpleDish(final String dish, final Dish addition) {
-        this(dish);
+    public SimpleDish(final String dish, final Dish addition, final DishClass cls) {
+        this(dish, cls);
         this.garnish = addition;
     }
 
@@ -33,6 +36,12 @@ public class SimpleDish implements Dish {
     @Override
     public String getPrettyName() {
         Logger.debug(this, "getPrettyName()");
-        return PATTERN.matcher(this.getName()).replaceAll(Matcher.quoteReplacement(""));
+        return SimpleDish.PATTERN.matcher(this.getName()).replaceAll(Matcher.quoteReplacement(""));
+    }
+
+    @Override
+    public DishClass getCls() {
+        Logger.debug(this, "getCls()");
+        return this.clazz;
     }
 }

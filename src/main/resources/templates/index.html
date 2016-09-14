@@ -30,6 +30,17 @@
             <label>Компотик</label>
             <span th:text="${DRINK.prettyName}" class="form-control"/>
         </div>
+        <div th:each="menu : ${menus}">
+            <h2 th:text="${menu.title}"/>
+            <label>Салатик</label>
+            <span th:text="${menu.salad.prettyName}" class="form-control"/>
+            <label>Супик</label>
+            <span th:text="${menu.soup.prettyName}" class="form-control"/>
+            <label>Горяченькое</label>
+            <span th:text="${menu.hot.prettyName}" class="form-control"/>
+            <label>Компотик</label>
+            <span th:text="${menu.drink.prettyName}" class="form-control"/>
+        </div>
     </form>
 </div>
 </body>

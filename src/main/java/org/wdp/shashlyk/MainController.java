@@ -1,11 +1,15 @@
 package org.wdp.shashlyk;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.wdp.shashlyk.classifier.DishClass;
 import org.wdp.shashlyk.classifier.DishClassifier;
 
 /**
@@ -21,9 +25,14 @@ public class MainController {
 
     private Map<String, ?> getDefaultModel() {
         final Map<String, Object> result = new HashMap<>(1);
-        for (final DishClassifier classifier : new DishClassifier[]{DishClassifier.SALAD, DishClassifier.SOUP, DishClassifier.HOT, DishClassifier.DRINK}) {
-            result.put(classifier.name(), classifier.random());
-        }
+        Arrays.asList(DishClassifier.SALAD, DishClassifier.SOUP, DishClassifier.HOT, DishClassifier.DRINK)
+            .stream().forEach(classifier -> result.put(classifier.name(), classifier.random()));
+        final List<Menu> menus = Arrays.stream(DishClass.values()).map(MainController::toMenu).collect(Collectors.toList());
+        result.put("menus", menus);
         return result;
+    }
+
+    private static Menu toMenu(final DishClass cls) {
+        return new SimpleMenu(cls);
     }
 }

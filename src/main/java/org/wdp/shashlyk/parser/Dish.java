@@ -3,6 +3,7 @@ package org.wdp.shashlyk.parser;
 import com.jcabi.log.Logger;
 import java.util.Locale;
 import java.util.function.Predicate;
+import org.wdp.shashlyk.classifier.DishClass;
 
 /**
  * Lunch dish.
@@ -12,6 +13,8 @@ public interface Dish {
     String getName();
 
     String getPrettyName();
+
+    DishClass getCls();
 
     class IsBusinessLunch implements Predicate<Dish> {
         @Override

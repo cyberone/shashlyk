@@ -38,4 +38,8 @@ public enum DishClassifier {
     public Dish random() {
         return this.category.random();
     }
+
+    public Dish random(final DishClass clazz) {
+        return this.category.random(clazz);
+    }
 }

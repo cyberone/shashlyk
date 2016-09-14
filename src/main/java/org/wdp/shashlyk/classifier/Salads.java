@@ -12,7 +12,7 @@ class Salads implements DishCategory {
     @Override
     public boolean contains(final Dish dish) {
         Logger.debug(this, "contains(%s)", dish);
-        for (final Salads.SaladNames name : Salads.SaladNames.values()) {
+        for (final Salads.SaladData name : Salads.SaladData.values()) {
             if (name.getName().equals(dish.getName())) {
                 return true;
             }
@@ -23,34 +23,50 @@ class Salads implements DishCategory {
     @Override
     public Dish random() {
         Logger.debug(this, "random()");
-        return new SimpleDish(
-            Salads.SaladNames.values()[
-                new Random().nextInt(Salads.SaladNames.values().length)]
-                .getName()
-        );
+        final Salads.SaladData data = Salads.SaladData.values()[
+            new Random().nextInt(Salads.SaladData.values().length)];
+        return new SimpleDish(data.getName(),data.getCls());
     }
 
-    private enum SaladNames {
-        HERING("Сельдь под шубой_БЛ"),
-        VINEGRET("Винегрет_БЛ"),
-        VITAMINS("Салат Витаминный (Новинка)_БЛ"),
-        OLIVE("Оливье (Новинка)_БЛ"),
-        PRESIDENTS("Салат \"Президентский\"_БЛ"),
-        HUNTERS("Салат \"Охотничий\"_БЛ"),
-        HAM_AND_PINEAPPLES("Салат с ветчиной и ананасами_БЛ"),
-        WOODPECKERS_NEST("Салат Гнездо дятла (Новинка)_БЛ"),
-        MOSCOW("Салат \"Московский\"_БЛ"),
-        CESAR("Салат \"Цезарь\"_БЛ")
+    @Override
+    public Dish random(final DishClass clazz) {
+        Logger.debug(this, "random(%s)", clazz);
+        Salads.SaladData dish;
+        final Random random = new Random();
+        do {
+            final Salads.SaladData[] values = Salads.SaladData.values();
+            dish = values[random.nextInt(values.length)];
+        } while (dish.getCls().ordinal() > clazz.ordinal());
+        return new SimpleDish(dish.getName(), clazz);
+    }
+
+    private enum SaladData {
+        HERING("Сельдь под шубой_БЛ", DishClass.PLEBS),
+        VINEGRET("Винегрет_БЛ", DishClass.PLEBS),
+        VITAMINS("Салат Витаминный (Новинка)_БЛ", DishClass.PLEBS),
+        OLIVE("Оливье (Новинка)_БЛ", DishClass.PLEBS),
+        PRESIDENTS("Салат \"Президентский\"_БЛ", DishClass.PROLETARIAT),
+        HUNTERS("Салат \"Охотничий\"_БЛ", DishClass.PROLETARIAT),
+        HAM_AND_PINEAPPLES("Салат с ветчиной и ананасами_БЛ", DishClass.PROLETARIAT),
+        WOODPECKERS_NEST("Салат Гнездо дятла (Новинка)_БЛ", DishClass.PROLETARIAT),
+        MOSCOW("Салат \"Московский\"_БЛ", DishClass.BOYARS),
+        CESAR("Салат \"Цезарь\"_БЛ", DishClass.BOYARS)
         ;
 
         private final String name;
+        private final DishClass clazz;
 
-        SaladNames(final String dish) {
+        SaladData(final String dish, final DishClass cls) {
             this.name = dish;
+            this.clazz = cls;
         }
 
         public String getName() {
             return this.name;
+        }
+
+        public DishClass getCls() {
+            return this.clazz;
         }
     }
 }

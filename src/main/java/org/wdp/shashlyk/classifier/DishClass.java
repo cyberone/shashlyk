@@ -5,8 +5,18 @@ package org.wdp.shashlyk.classifier;
  * @author Aleksey Popov (alopen@yandex.ru)
  */
 public enum DishClass {
-    PLEBS,
-    PROLETARIAT,
-    BOYARS,
+    PLEBS("Плебейское"),
+    PROLETARIAT("Пролетарское"),
+    BOYARS("Барское"),
     ;
+
+    private final String title;
+
+    DishClass(final String ttle) {
+        this.title = ttle;
+    }
+
+    public String getTitle() {
+        return this.title;
+    }
 }

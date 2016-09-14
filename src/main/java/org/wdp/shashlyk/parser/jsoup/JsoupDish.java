@@ -5,6 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.wdp.shashlyk.classifier.DishClass;
 import org.wdp.shashlyk.parser.Dish;
 
 /**
@@ -36,11 +37,16 @@ class JsoupDish implements Dish {
     @Override
     public String getPrettyName() {
         Logger.debug(this, "getPrettyName()");
-        return PATTERN.matcher(this.getName()).replaceAll(Matcher.quoteReplacement(""));
+        return JsoupDish.PATTERN.matcher(this.getName()).replaceAll(Matcher.quoteReplacement(""));
+    }
+
+    @Override
+    public DishClass getCls() {
+        throw new UnsupportedOperationException("getCls");
     }
 
     @Override
     public String toString() {
-        return String.format("Dish(%s)", this.getName());
+        return String.format("Dish(%s){%s}", this.getName(), this.data);
     }
 }

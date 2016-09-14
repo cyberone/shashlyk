@@ -22,11 +22,14 @@ class Sweets implements DishCategory {
 
     @Override
     public Dish random() {
-        return new SimpleDish(
-            Sweets.SweetNames.values()[
-                new Random().nextInt(Sweets.SweetNames.values().length)]
-                .getName()
-        );
+        final Sweets.SweetNames data = Sweets.SweetNames.values()[
+            new Random().nextInt(Sweets.SweetNames.values().length)];
+        return new SimpleDish(data.getName(), DishClass.BOYARS);
+    }
+
+    @Override
+    public Dish random(final DishClass clazz) {
+        return this.random();
     }
 
     private enum SweetNames {
