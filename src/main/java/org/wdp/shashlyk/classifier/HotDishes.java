@@ -58,6 +58,7 @@ class HotDishes implements DishCategory {
         TURK_STEAKS("Турецкие котлетки_БЛ", true, DishClass.PLEBS),
         CHICKEN_KEBAB("Кебаб Куриный_БЛ", true, DishClass.PLEBS),
         PORIDGE_MUSH_EGGS("Гречка с грибами и глазуньей (Новинка)_БЛ", false, DishClass.PLEBS),
+        PASTA_MUSH("Паста с курочкой и грибами", false, DishClass.PLEBS),
         KESADIA("Кесадия с курицей_БЛ", false, DishClass.PROLETARIAT),
         CHICKEN_GRILL("Цыпленок - гриль_БЛ", true, DishClass.PROLETARIAT),
         CHICKEN_SHASHLYK("Шашлык куриный_БЛ", true, DishClass.PROLETARIAT),
