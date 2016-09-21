@@ -5,9 +5,23 @@
     <title>Mashlyk kebab</title>
     <link rel='stylesheet'
           href='/webjars/bootstrap/3.3.6/css/bootstrap.min.css'/>
+    <script type="text/javascript">
+        function ldDoc() {
+            data = {
+                "Плебейское" : "success",
+                "Пролетарское" : "warning",
+                "Барское" : "danger"
+            };
+            keys = Object.keys(data);
+            for (key in keys) {
+                div = document.getElementById(keys[key]);
+                div.className += ' panel-' + data[keys[key]];
+            }
+        }
+    </script>
 </head>
 
-<body>
+<body onload="ldDoc()">
 <nav class="navbar navbar-default">
     <div class="container">
         <div id="navbar" class="collapse navbar-collapse">
@@ -37,7 +51,8 @@
             </ul>
         </div>
     </div>
-    <div th:each="menu : ${menus}" class="panel panel-default">
+    <div th:each="menu : ${menus}"
+         class="panel panel-default" th:attr="id=${menu.title}">
         <div class="panel-heading" th:text="${menu.title}"></div>
         <ul>
             <li><span th:text="${menu.salad.prettyName}"/></li>
