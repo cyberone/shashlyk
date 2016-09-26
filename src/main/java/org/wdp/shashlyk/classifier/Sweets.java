@@ -32,6 +32,12 @@ class Sweets implements DishCategory {
         return this.random();
     }
 
+    @Override
+    public Dish strictRandom(final DishClass cls) {
+        Logger.debug(this, "strictRandom()");
+        throw new UnsupportedOperationException("#strictRandom)");
+    }
+
     private enum SweetNames {
         EKLER("Пирожное \"Эклер\"_БЛ"),
         BIRD_MILK("Пирожное \"Птичье молоко\"_БЛ"),

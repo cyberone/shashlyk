@@ -34,6 +34,11 @@ public class Garnishes implements DishCategory {
         return this.random();
     }
 
+    @Override
+    public Dish strictRandom(final DishClass cls) {
+        throw new UnsupportedOperationException("#strictRandom)");
+    }
+
     private enum GarnishNames {
         PUREE("Пюре"),
         FRIED("Жареная картоха"),

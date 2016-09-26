@@ -1,9 +1,9 @@
 package org.wdp.shashlyk;
 
-import com.jcabi.log.Logger;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.function.Predicate;
+import java.util.List;
+import java.util.Random;
 import org.wdp.shashlyk.classifier.DishClass;
 import org.wdp.shashlyk.classifier.DishClassifier;
 import org.wdp.shashlyk.parser.Dish;
@@ -18,20 +18,23 @@ public class SimpleMenu implements Menu {
     private Dish soup;
     private Dish hot;
     private Dish drink;
+    private boolean initialized = false;
 
     SimpleMenu(final DishClass cls) {
         this.clazz = cls;
-        this.rollDishes();
     }
 
-    private void rollDishes() {
-        Logger.debug(this, "rollDishes(%s)", this.clazz);
-        do {
-            this.salad = DishClassifier.SALAD.random(this.clazz);
-            this.soup = DishClassifier.SOUP.random(this.clazz);
-            this.hot = DishClassifier.HOT.random(this.clazz);
-        } while (!new DishChooser(this.salad, this.soup, this.hot).hasClass(this.clazz));
-        this.drink = DishClassifier.DRINK.random(this.clazz);
+    private void roll(final DishClass cls) {
+        final List<SimpleMenu.Chooser> choices = new ArrayList<>(
+            Arrays.asList(SimpleMenu.Chooser.values())
+        );
+        final SimpleMenu.Chooser strict = choices.remove(new Random().nextInt(choices.size()));
+        strict.setStrict(this, cls);
+        for (final SimpleMenu.Chooser choice : choices) {
+            choice.set(this, choice.getClazz().random(cls));
+        }
+        this.drink = DishClassifier.DRINK.random(cls);
+        this.initialized = true;
     }
 
     @Override
@@ -40,36 +43,80 @@ public class SimpleMenu implements Menu {
     }
 
     public Dish getSalad() {
+        if (!this.initialized) {
+            this.roll(this.clazz);
+        }
         return this.salad;
     }
 
     public Dish getSoup() {
+        if (!this.initialized) {
+            this.roll(this.clazz);
+        }
         return this.soup;
     }
 
     public Dish getDrink() {
+        if (!this.initialized) {
+            this.roll(this.clazz);
+        }
         return this.drink;
     }
 
     public Dish getHot() {
+        if (!this.initialized) {
+            this.roll(this.clazz);
+        }
         return this.hot;
-
     }
 
-    private class DishChooser {
-        private final Collection<Dish> data;
+    private void setSalad(Dish salad) {
+        this.salad = salad;
+    }
 
-        public DishChooser(final Dish ...dishes) {
-            this.data = Arrays.asList(dishes);
+    private void setSoup(Dish soup) {
+        this.soup = soup;
+    }
+
+    private void setHot(Dish hot) {
+        this.hot = hot;
+    }
+
+    private enum Chooser {
+        SALAD(DishClassifier.SALAD) {
+            @Override
+            public void set(final SimpleMenu menu, final Dish dish) {
+                menu.setSalad(dish);
+            }
+        },
+        SOUP(DishClassifier.SOUP) {
+            @Override
+            public void set(final SimpleMenu menu, final Dish dish) {
+                menu.setSoup(dish);
+            }
+        },
+        HOT(DishClassifier.HOT) {
+            @Override
+            public void set(final SimpleMenu menu, final Dish dish) {
+                menu.setHot(dish);
+            }
+        };
+
+        private final DishClassifier clazz;
+
+        Chooser(final DishClassifier cls) {
+            this.clazz = cls;
         }
 
-        public boolean hasClass(final DishClass clazz) {
-            return this.data.stream().anyMatch(new Predicate<Dish>() {
-                @Override
-                public boolean test(final Dish dish) {
-                    return dish.getCls() == clazz;
-                }
-            });
+        public void setStrict(final SimpleMenu menu, final DishClass cls) {
+            final Dish dish = this.getClazz().strictRandom(cls);
+            this.set(menu, dish);
+        }
+
+        public abstract void set(SimpleMenu menu, Dish dish);
+
+        public DishClassifier getClazz() {
+            return this.clazz;
         }
     }
 }

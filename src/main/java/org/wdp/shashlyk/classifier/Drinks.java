@@ -40,6 +40,12 @@ class Drinks implements DishCategory {
         return new SimpleDish(dish.getName(), clazz);
     }
 
+    @Override
+    public Dish strictRandom(final DishClass cls) {
+        Logger.debug(this, "strictRandom()");
+        throw new UnsupportedOperationException("#strictRandom)");
+    }
+
     private enum DrinkNames {
         BLACK_CURRANT("Чёрная смородина", DishClass.PLEBS),
         ROWAN("Рябина", DishClass.PLEBS),

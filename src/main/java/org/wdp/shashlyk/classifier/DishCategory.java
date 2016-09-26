@@ -16,4 +16,6 @@ interface DishCategory {
     Dish random();
 
     Dish random(DishClass clazz);
+
+    Dish strictRandom(DishClass cls);
 }

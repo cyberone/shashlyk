@@ -42,4 +42,8 @@ public enum DishClassifier {
     public Dish random(final DishClass clazz) {
         return this.category.random(clazz);
     }
+
+    public Dish strictRandom(final DishClass cls) {
+        return this.category.strictRandom(cls);
+    }
 }

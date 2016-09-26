@@ -1,7 +1,10 @@
 package org.wdp.shashlyk.classifier;
 
 import com.jcabi.log.Logger;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 import org.wdp.shashlyk.parser.Dish;
 import org.wdp.shashlyk.parser.simple.SimpleDish;
 
@@ -38,6 +41,15 @@ class Salads implements DishCategory {
             dish = values[random.nextInt(values.length)];
         } while (dish.getCls().ordinal() > clazz.ordinal());
         return new SimpleDish(dish.getName(), clazz);
+    }
+
+    @Override
+    public Dish strictRandom(final DishClass cls) {
+        final List<Salads.SaladData> salads = Arrays.stream(Salads.SaladData.values()).filter(
+            saladData -> cls == saladData.getCls()
+        ).collect(Collectors.toList());
+        final Salads.SaladData data = salads.get(new Random().nextInt(salads.size()));
+        return new SimpleDish(data.getName(), data.getCls());
     }
 
     private enum SaladData {
