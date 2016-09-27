@@ -10,9 +10,9 @@
     <script type="text/javascript">
         function ldDoc() {
             data = {
-                "Плебейское" : "success",
-                "Пролетарское" : "warning",
-                "Барское" : "danger"
+                "Плебейское": "success",
+                "Пролетарское": "warning",
+                "Барское": "danger"
             };
             keys = Object.keys(data);
             for (key in keys) {
@@ -56,12 +56,14 @@
     <div th:each="menu : ${menus}"
          class="panel panel-default" th:attr="id=${menu.title}">
         <div class="panel-heading" th:text="${menu.title}"></div>
-        <ul>
-            <li><span th:text="${menu.salad.prettyName}"/></li>
-            <li><span th:text="${menu.soup.prettyName}"/></li>
-            <li><span th:text="${menu.hot.prettyName}"/></li>
-            <li><span th:text="${menu.drink.prettyName}"/></li>
-        </ul>
+        <div class="panel-body">
+            <ul>
+                <li><span th:text="${menu.salad.prettyName}"/></li>
+                <li><span th:text="${menu.soup.prettyName}"/></li>
+                <li><span th:text="${menu.hot.prettyName}"/></li>
+                <li><span th:text="${menu.drink.prettyName}"/></li>
+            </ul>
+        </div>
     </div>
 </div>
 </body>
