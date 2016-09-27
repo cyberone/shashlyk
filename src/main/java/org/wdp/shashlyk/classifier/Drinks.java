@@ -49,7 +49,8 @@ class Drinks implements DishCategory {
     private enum DrinkNames {
         BLACK_CURRANT("Чёрная смородина", DishClass.PLEBS),
         ROWAN("Рябина", DishClass.PLEBS),
-        TEA("Чай пакетированный", DishClass.PLEBS),
+        BLACK_TEA("Чай чёрный пакетированный", DishClass.PLEBS),
+        GREEN_TEA("Чай зелёненький пакетированный", DishClass.PLEBS),
         CHERRY("Морс \"Дикая вишня\"", DishClass.PROLETARIAT),
         CRANBERRIES("Морс клюквенный", DishClass.PROLETARIAT),
         SEA_BUCKTHORN("Облепиха", DishClass.PROLETARIAT),
