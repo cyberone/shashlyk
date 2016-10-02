@@ -39,12 +39,14 @@ class HotDishes implements DishCategory {
     @Override
     public Dish random(final DishClass clazz) {
         Logger.debug(this, "random(%s)", clazz);
-        HotDishes.DishData dish;
-        final Random random = new Random();
-        do {
-            final HotDishes.DishData[] values = HotDishes.DishData.values();
-            dish = values[random.nextInt(values.length)];
-        } while (dish.getCls().ordinal() > clazz.ordinal());
+        final List<HotDishes.DishData> list = Arrays.stream(
+            HotDishes.DishData.values()
+        ).filter(
+            dishData -> dishData.getCls().ordinal() <= clazz.ordinal()
+        ).collect(Collectors.toList());
+        final HotDishes.DishData dish = list.get(
+            new Random().nextInt(list.size())
+        );
         if (dish.needsGarnish()) {
             return new SimpleDish(dish.getName(), new Garnishes().random(), clazz);
         }

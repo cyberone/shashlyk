@@ -34,12 +34,14 @@ class Salads implements DishCategory {
     @Override
     public Dish random(final DishClass clazz) {
         Logger.debug(this, "random(%s)", clazz);
-        Salads.SaladData dish;
-        final Random random = new Random();
-        do {
-            final Salads.SaladData[] values = Salads.SaladData.values();
-            dish = values[random.nextInt(values.length)];
-        } while (dish.getCls().ordinal() > clazz.ordinal());
+        final List<Salads.SaladData> list = Arrays.stream(
+            Salads.SaladData.values()
+        ).filter(
+            saladData -> saladData.getCls().ordinal() <= clazz.ordinal()
+        ).collect(Collectors.toList());
+        final Salads.SaladData dish = list.get(
+            new Random().nextInt(list.size())
+        );
         return new SimpleDish(dish.getName(), clazz);
     }
 

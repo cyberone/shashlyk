@@ -1,7 +1,10 @@
 package org.wdp.shashlyk.classifier;
 
 import com.jcabi.log.Logger;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 import org.wdp.shashlyk.parser.Dish;
 import org.wdp.shashlyk.parser.simple.SimpleDish;
 
@@ -31,12 +34,14 @@ class Drinks implements DishCategory {
     @Override
     public Dish random(final DishClass clazz) {
         Logger.debug(this, "random(%s)", clazz);
-        Drinks.DrinkNames dish;
-        final Random random = new Random();
-        do {
-            final Drinks.DrinkNames[] values = Drinks.DrinkNames.values();
-            dish = values[random.nextInt(values.length)];
-        } while (dish.getCls().ordinal() > clazz.ordinal());
+        final List<Drinks.DrinkNames> list = Arrays.stream(
+            Drinks.DrinkNames.values()
+        ).filter(
+            drink -> drink.getCls().ordinal() <= clazz.ordinal()
+        ).collect(Collectors.toList());
+        final Drinks.DrinkNames dish = list.get(
+            new Random().nextInt(list.size())
+        );
         return new SimpleDish(dish.getName(), clazz);
     }
 

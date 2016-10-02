@@ -34,12 +34,12 @@ class Soups implements DishCategory {
     @Override
     public Dish random(final DishClass clazz) {
         Logger.debug(this, "random(%s)", clazz);
-        Soups.SoupData dish;
-        final Random random = new Random();
-        do {
-            final Soups.SoupData[] values = Soups.SoupData.values();
-            dish = values[random.nextInt(values.length)];
-        } while (dish.getCls().ordinal() > clazz.ordinal());
+        final List<Soups.SoupData> list = Arrays.stream(
+            Soups.SoupData.values()
+        ).filter(
+            soupData -> soupData.getCls().ordinal() <= clazz.ordinal()
+        ).collect(Collectors.toList());
+        final Soups.SoupData dish = list.get(new Random().nextInt(list.size()));
         return new SimpleDish(dish.getName(), clazz);
     }
 
