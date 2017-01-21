@@ -59,10 +59,9 @@ class Soups implements DishCategory {
         LIGHT("Суп \"Легкий\"_БЛ", DishClass.PLEBS),
         SHASHLIKOFF("Суп \"Шашлыкофф\" с курицей_БЛ", DishClass.PROLETARIAT),
         TUTA_LARSEN("Суп куриный Тута Ларсен (Новинка)_БЛ", DishClass.PROLETARIAT),
-        CHEESE_CREAM("Сырный крем-суп_БЛ", DishClass.BOYARS),
         SALTWORT("Солянка_БЛ", DishClass.BOYARS),
-        OH_BABY_HAM("Окрошка с ветчиной (Новинка)_БЛ", DishClass.BOYARS),
-        OH_BABY_BEEF("Окрошка с говядиной (Новинка)_БЛ", DishClass.BOYARS),
+        MUSHROOMS("Суп пюре грибной (NEW)_БЛ", DishClass.BOYARS),
+        CHEESE_CREAM("Сырный крем-суп_БЛ", DishClass.BOYARS),
         ;
 
         private final String name;

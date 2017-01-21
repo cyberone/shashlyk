@@ -56,15 +56,16 @@ class Salads implements DishCategory {
 
     private enum SaladData {
         HERING("Сельдь под шубой_БЛ", DishClass.PLEBS),
-        VINEGRET("Винегрет_БЛ", DishClass.PLEBS),
         VITAMINS("Салат Витаминный (Новинка)_БЛ", DishClass.PLEBS),
         OLIVE("Оливье (Новинка)_БЛ", DishClass.PLEBS),
+        KOWL_SLOW("Салат Коул Слоу (NEW)_БЛ", DishClass.PLEBS),
         PRESIDENTS("Салат \"Президентский\"_БЛ", DishClass.PROLETARIAT),
         HUNTERS("Салат \"Охотничий\"_БЛ", DishClass.PROLETARIAT),
-        HAM_AND_PINEAPPLES("Салат с ветчиной и ананасами_БЛ", DishClass.PROLETARIAT),
         WOODPECKERS_NEST("Салат Гнездо дятла (Новинка)_БЛ", DishClass.PROLETARIAT),
-        MOSCOW("Салат \"Московский\"_БЛ", DishClass.BOYARS),
-        CESAR("Салат \"Цезарь\"_БЛ", DishClass.BOYARS)
+        AUTUMN("Салатик Осенний (NEW)_БЛ", DishClass.PROLETARIAT),
+        CUCUMBER("Огуречный (NEW)_БЛ", DishClass.PROLETARIAT),
+        CESAR("Салат \"Цезарь\"_БЛ", DishClass.BOYARS),
+        RED_HOOD("Салат Красная шапочка (NEW)_БЛ", DishClass.BOYARS),
         ;
 
         private final String name;
